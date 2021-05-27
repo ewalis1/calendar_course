@@ -1,9 +1,10 @@
 import './App.scss';
+import Calendar from './components/Calendar';
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello JS!</h1>
+      <Calendar/>
     </div>
   );
 }
