@@ -20,6 +20,17 @@ export default function Calendar() {
     }
     setCalendar(arr);
   }, [value]);
+
+  const chosenDay = day => value.isSame(day, "day");
+  const yesterday = day => day.isBefore(new Date(), "day");
+  const today = day => day.isSame(new Date(), "day");
+
+  const dayStyling = (day, value) => {
+    if (chosenDay(day, value)) return "pickedDay";
+    if (yesterday(day)) return "yesterday";
+    if (today(day)) return "today";
+    return "";
+  }
   
   return <div className="calendar">
     {
@@ -27,7 +38,7 @@ export default function Calendar() {
         <div key={index}>
           {week.map((day, index) => (
             <div key={index} className="day" onClick={() => setValue(day)}>
-              <div className={value.isSame(day, "day") ? "chosenDay" : ""}>
+              <div className={dayStyling(day, value)}>
                 {day.format("DD")}
               </div>
             </div>
