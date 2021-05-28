@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import localization from 'moment/locale/pl';
 
-export default function Calendar() {
-  const [value, setValue] = useState(moment());
+export default function Calendar({value, onChange}) {
   const [calendar, setCalendar] = useState([]);
   moment.locale('pl', localization);
 
@@ -42,15 +41,15 @@ export default function Calendar() {
 
   return <div className="calendar">
   <div className="calendar__header">
-  <div className="prevMonth" onClick={() => !actualMonth() && setValue(previousMonth())}>{!actualMonth() ? <i class="fas fa-chevron-left"></i> : null}</div>
+  <div className="prevMonth" onClick={() => !actualMonth() && onChange(previousMonth())}>{!actualMonth() ? <i class="fas fa-chevron-left"></i> : null}</div>
     <div>{currentMonth()} {currentYear()}</div>
-    <div className="nextMonth" onClick={() => setValue(nextMonth())}><i class="fas fa-chevron-right"></i></div>
+    <div className="nextMonth" onClick={() => onChange(nextMonth())}><i class="fas fa-chevron-right"></i></div>
   </div>
   <div className="calendar__grid">
       {calendar.map((week, index) => (
         <div key={index}>
           {week.map((day, index) => (
-            <div key={index} className="day" onClick={() => !prevToday(day) && setValue(day)}>
+            <div key={index} className="day" onClick={() => !prevToday(day) && onChange(day)}>
               <div className={dayStyling(day, value)}>
                 {day.format("DD")}
               </div>
