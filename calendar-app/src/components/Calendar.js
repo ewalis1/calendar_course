@@ -43,9 +43,14 @@ export default function Calendar({value, onChange}) {
   <div className="calendar__header">
   <div className="prevMonth" onClick={() => !actualMonth() && onChange(previousMonth())}>{!actualMonth() ? <i class="fas fa-chevron-left"></i> : null}</div>
     <div>{currentMonth()} {currentYear()}</div>
-    <div className="nextMonth" onClick={() => onChange(nextMonth())}><i class="fas fa-chevron-right"></i></div>
+    <div className="nextMonth" onClick={() => onChange(nextMonth())}><i className="fas fa-chevron-right"></i></div>
   </div>
   <div className="calendar__grid">
+    <div className="days">
+      {["pn", "wt", "śr", "czw", "pt", "sob", "nd"].map((d, index) => (
+          <div key={index} className="week">{d}</div>
+        ))}
+    </div>
       {calendar.map((week, index) => (
         <div key={index}>
           {week.map((day, index) => (

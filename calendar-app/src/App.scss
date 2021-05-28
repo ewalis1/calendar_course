@@ -46,9 +46,23 @@ $red: #FF7B60;
   }
   &__grid {
     border: 1px solid lighten($color-selected, 20);
+    .week {
+      height: 3em;
+      display: inline-block;
+      font-size: 1.2em;
+      text-align: center;
+      line-height: 3em;
+      }
+      .days {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        text-align: center;
+        font-weight: bold;
+      }
   }
 
-  .day {
+  .day{
     width: calc(100% / 7);
     height: 3em;
     display: inline-block;
