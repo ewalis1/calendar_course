@@ -37,9 +37,12 @@ export default function Calendar() {
   const previousMonth = () => value.clone().subtract(1, "month");
   const nextMonth = () => value.clone().add(1, "month");
 
+  const actualMonth = () => value.isSame(new Date(), "month");
+  const prevToday = day => day.isBefore(new Date(), "day");
+
   return <div className="calendar">
   <div className="calendar__header">
-    <div className="prevMonth" onClick={() => setValue(previousMonth())}><i class="fas fa-chevron-left"></i></div>
+  <div className="prevMonth" onClick={() => !actualMonth() && setValue(previousMonth())}>{!actualMonth() ? <i class="fas fa-chevron-left"></i> : null}</div>
     <div>{currentMonth()} {currentYear()}</div>
     <div className="nextMonth" onClick={() => setValue(nextMonth())}><i class="fas fa-chevron-right"></i></div>
   </div>
@@ -47,7 +50,7 @@ export default function Calendar() {
       {calendar.map((week, index) => (
         <div key={index}>
           {week.map((day, index) => (
-            <div key={index} className="day" onClick={() => setValue(day)}>
+            <div key={index} className="day" onClick={() => !prevToday(day) && setValue(day)}>
               <div className={dayStyling(day, value)}>
                 {day.format("DD")}
               </div>
@@ -56,6 +59,6 @@ export default function Calendar() {
         </div>
       ))}
   </div>
-    </div>
+  </div>
 }
 
