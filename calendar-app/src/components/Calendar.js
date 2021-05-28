@@ -21,7 +21,7 @@ export default function Calendar() {
     setCalendar(arr);
   }, [value]);
 
-  const chosenDay = day => value.isSame(day, "day");
+  const chosenDay = (day, value) => value.isSame(day, "day");
   const yesterday = day => day.isBefore(new Date(), "day");
   const today = day => day.isSame(new Date(), "day");
 
@@ -32,9 +32,19 @@ export default function Calendar() {
     return "";
   }
   
+  const currentMonth = () => value.format("MMMM");
+  const currentYear = () => value.format("YYYY");
+  const previousMonth = () => value.clone().subtract(1, "month");
+  const nextMonth = () => value.clone().add(1, "month");
+
   return <div className="calendar">
-    {
-      calendar.map((week, index) => (
+  <div className="calendar__header">
+    <div className="prevMonth" onClick={() => setValue(previousMonth())}><i class="fas fa-chevron-left"></i></div>
+    <div>{currentMonth()} {currentYear()}</div>
+    <div className="nextMonth" onClick={() => setValue(nextMonth())}><i class="fas fa-chevron-right"></i></div>
+  </div>
+  <div className="calendar__grid">
+      {calendar.map((week, index) => (
         <div key={index}>
           {week.map((day, index) => (
             <div key={index} className="day" onClick={() => setValue(day)}>
@@ -44,7 +54,8 @@ export default function Calendar() {
             </div>
           ))}
         </div>
-      ))
-    }</div>
+      ))}
+  </div>
+    </div>
 }
 
