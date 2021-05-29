@@ -1,0 +1,22 @@
+{
+    "reservations": [
+        {
+            "id": 1,
+            "name": "Jan",
+            "surname": "Kowalski",
+            "date": "2021-06-04T22:00:00.000Z"
+        },
+        {
+            "id": 2,
+            "name": "Nick",
+            "surname": "Carter",
+            "date": "2021-07-15T22:00:00.000Z"
+        },
+        {
+            "id": 3,
+            "name": "Chandler",
+            "surname": "Bing",
+            "date": "2021-07-20T22:00:00.000Z"
+        }
+    ]
+}
