@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import localization from 'moment/locale/pl';
+import CalendarForm from './CalendarForm';
 
 export default function Calendar({value, onChange}) {
   const [calendar, setCalendar] = useState([]);
   moment.locale('pl', localization);
-
+  
   const startWeek = value.clone().startOf("month").startOf("week");
   const endWeek = value.clone().endOf("month").endOf("week");
   
@@ -15,10 +16,20 @@ export default function Calendar({value, onChange}) {
     while(day.isBefore(endWeek, "day")) {
       arr.push(
         Array(7).fill("d").map(() => day.add(1, "day").clone())
-      );
-    }
-    setCalendar(arr);
-  }, [value]);
+        );
+      }
+      setCalendar(arr);
+    }, [value]);
+    
+    const [reservations, setReservations] = useState(null);
+    useEffect(() => {
+      fetch('http://localhost:3001/reservations')
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        setReservations(data);
+        }); 
+    }, []);
 
   const chosenDay = (day, value) => value.isSame(day, "day");
   const yesterday = day => day.isBefore(new Date(), "day");
@@ -39,7 +50,9 @@ export default function Calendar({value, onChange}) {
   const actualMonth = () => value.isSame(new Date(), "month");
   const prevToday = day => day.isBefore(new Date(), "day");
 
-  return <div className="calendar">
+  return (
+    <>
+    <div className="calendar">
     <div className="calendar__header">
       <div className="prevMonth" onClick={() => !actualMonth() && onChange(previousMonth())}>{!actualMonth() ? <i className="fas fa-chevron-left"></i> : null}</div>
       <div>{currentMonth()} {currentYear()}</div>
@@ -64,5 +77,7 @@ export default function Calendar({value, onChange}) {
         ))}
       </div>
   </div>
+  <CalendarForm valueDate={value}/>
+    </>
+  )
 }
-
