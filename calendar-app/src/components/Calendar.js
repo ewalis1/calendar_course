@@ -5,6 +5,8 @@ import CalendarForm from './CalendarForm';
 
 export default function Calendar({value, onChange}) {
   const [calendar, setCalendar] = useState([]);
+  const [active, setActive] = useState(false);
+  const [showComponent, setShowComponent] = useState(false);
   moment.locale('pl', localization);
   
   const startWeek = value.clone().startOf("month").startOf("week");
@@ -31,12 +33,16 @@ export default function Calendar({value, onChange}) {
         }); 
     }, []);
 
+  const handleShowComponent= () => setShowComponent(true);
+
   const chosenDay = (day, value) => value.isSame(day, "day");
   const yesterday = day => day.isBefore(new Date(), "day");
   const today = day => day.isSame(new Date(), "day");
 
   const dayStyling = (day, value) => {
-    if (chosenDay(day, value)) return "pickedDay";
+    if (chosenDay(day, value)) {
+      return "pickedDay";
+    };
     if (yesterday(day)) return "yesterday";
     if (today(day)) return "today";
     return "";
@@ -68,8 +74,9 @@ export default function Calendar({value, onChange}) {
           <div key={index}>
             {week.map((day, index) => (
               <div key={index} className="day" onClick={() => !prevToday(day) && onChange(day)}>
-                <div className={dayStyling(day, value)}>
+                <div className={dayStyling(day, value)} onClick={ () => setActive(true)}>
                   {day.format("DD")}
+                  {active && <i className="fas fa-plus" onClick={() => {setShowComponent(true)}}></i>}
                 </div>
               </div>
             ))}
@@ -77,7 +84,9 @@ export default function Calendar({value, onChange}) {
         ))}
       </div>
   </div>
-  <CalendarForm valueDate={value}/>
+  <div>
+    {showComponent && <CalendarForm valueDate={value}/>}
+  </div>
     </>
   )
 }
