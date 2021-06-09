@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import localization from 'moment/locale/pl';
 import CalendarForm from './CalendarForm';
+// import useFetch from 'use-http';
 
 export default function Calendar({value, onChange}) {
   const [calendar, setCalendar] = useState([]);
@@ -25,14 +26,39 @@ export default function Calendar({value, onChange}) {
       setCalendar(arr);
     }, [value]);
     
-    const [reservations, setReservations] = useState(null);
+    // const url = 'http://localhost:3001/reservations'
+    // const useFetch(reservations), {
+      //   useEffect(() => {
+        const [reservations, setReservations] = useState(null);
+        //     fetch(url)
+        //     .then(response => {
+          //       if (response.ok) {
+            //         return response.json()
+            //     }
+            //     throw new Error('Komunikacja z serwerem się nie powiodła!');
+            //     })
+            //     .then((data) => {
+              //       console.log(data);
+              //       data.forEach(e => console.log(e.date));
+              //       setReservations(data.results);
+              //       }); 
+              //   }, [url]);
+              //   return [reservations];
+              // }
+              
+              
     useEffect(() => {
       fetch('http://localhost:3001/reservations')
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+      }
+      throw new Error('Komunikacja z serwerem się nie powiodła!');
+      })
       .then((data) => {
         console.log(data);
         data.forEach(e => console.log(e.date));
-        setReservations(data);
+        setReservations(data.results);
         }); 
     }, []);
 
@@ -42,13 +68,6 @@ export default function Calendar({value, onChange}) {
     const today = day => day.isSame(new Date(), "day");
     const daysOfNextMonth = day => day.isAfter(endMonth, "day");
     const daysOfPreviousMonth = day => day.isBefore(startMonth, "day");
-    // if (resenvations.length === 0) {
-    //   console.log(null);
-    // } else {
-    //   console.log(reservations.date);
-    // }
-    // const reservedDays = reservations.map(res => res.date);
-    // reservedDays.forEach(e => e.className="reservedDay");
 
     const currentMonth = () => value.format("MMMM");
     const currentYear = () => value.format("YYYY");
@@ -57,7 +76,6 @@ export default function Calendar({value, onChange}) {
   
     const actualMonth = () => value.isSame(new Date(), "month");
     const prevToday = day => day.isBefore(new Date(), "day");
-    // const reservedDay = () => value.isSame(reservedDays, "day");
 
   
   const dayStyling = (day, value, valueDate) => {
@@ -66,22 +84,21 @@ export default function Calendar({value, onChange}) {
     if (today(day)) return "today";
     if (daysOfNextMonth(day)) return "next-month";
     if (daysOfPreviousMonth(day)) return "previous-month";
-    // if (reservedDays) return "reservedDay";
-    // if (reservedDay(valueDate, day)) return "reservedDay";
+    // if (reservedDays()) return "reservedDay";
     return "";
   }
   
-
-
   return (
     <>
-    <div className="calendar">
+    <div className="container">
+    <div className="row justify-content-center">
+    <div className="calendar col-12">
     <div className="calendar__header">
       <div className="prevMonth" onClick={() => !actualMonth() && onChange(previousMonth())}>{!actualMonth() ? <i className="fas fa-chevron-left"></i> : null}</div>
       <div>{currentMonth()} {currentYear()}</div>
       <div className="nextMonth" onClick={() => onChange(nextMonth())}><i className="fas fa-chevron-right"></i></div>
     </div>
-    <div className="calendar__grid">
+    <div className="calendar__grid" id="calendar">
       <div className="days">
         {["pn", "wt", "śr", "czw", "pt", "sob", "nd"].map((d, index) => (
           <div key={index} className="week">{d}</div>
@@ -101,14 +118,22 @@ export default function Calendar({value, onChange}) {
         ))}
       </div>
   </div>
-  <div>
+  </div>
+  <div className="row justify-content-center">
+    <div className="col-12 col-lg-8">
     {showComponent && <CalendarForm valueDate={value}/>}
   </div>
-  {/* <ul>
-    {
-      reservations.map(res => <li key={res.id}>{res.date}</li>)
-    }
-  </ul> */}
+  </div>
+  <div>
+  {
+    reservations && <ul>
+      {
+        reservations.map(res => <li key={res.id}>{res.date}</li>)
+      }
+        </ul>
+  }
+  </div>
+  </div>
     </>
   )
 }

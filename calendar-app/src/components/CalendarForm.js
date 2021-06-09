@@ -5,7 +5,8 @@ const CalendarForm = ({valueDate}) => {
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [isPending, setIsPending] =useState(false);
+    const [isPending, setIsPending] = useState(false);
+    const [reserved, setReserved] = useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -20,12 +21,13 @@ const CalendarForm = ({valueDate}) => {
         }).then(() => {
             console.log('New reservation added');
             setIsPending(false);
+            //wywolac f-cje, ktora pobierze rezerwacje
         })
     }
 
     return (
         <div className="form__calendar">
-            <h2>Zarezerwuj termin szkolenia:</h2>
+            <h2>Zarezerwuj termin szkolenia</h2>
             <form onSubmit={handleSubmit}>
                 <label>Imię:</label>
                 <input type="text"
@@ -56,7 +58,8 @@ const CalendarForm = ({valueDate}) => {
                 onChange={e => e.target.value}
                 />
                 <div className="div-btn">
-                { !isPending && <button className="form__button">Zarezerwuj</button>}
+                {/* {do buttona dodac onclicka zeby wywolal funkcje z dodawaniem rezerwacji} */}
+                { !isPending && <button className="form__button" onClick={() => setReserved(true)}>Zarezerwuj</button>}
                 { isPending && <button disabled className="form__btn form__btn__disabled">Dodawanie rezerwacji...</button>}
                 </div>
             </form>
