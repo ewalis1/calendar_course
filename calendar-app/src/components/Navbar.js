@@ -20,7 +20,7 @@ export default function Navbar() {
                     <li><a href='#calendar' className='navbar__link'>Kalendarz</a></li>
                     <li><a href='http://bikeszkola.pl' className='navbar__link'>Bikeszkoła</a></li>
                     <li><a href='https://www.hls-shop.pl/kategoria-produktu/hls/' className='navbar__link'>Sklep</a></li>
-                    <li><a href='#contact' className='navbar__link'>Kontakt</a></li>
+                    <li><a href='#contact' className='navbar__link'>Social media</a></li>
                 </ul>
             </nav>
             </div>

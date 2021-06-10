@@ -1,7 +1,7 @@
 @import './presets.scss';
 
 .form__calendar {
-    margin: 1em;
+    margin: 0 0.85em 2em 0.85em;
     padding: 1.5em;
     border: 1px dotted lighten($color-selected, 20);
     border-radius: $radius;

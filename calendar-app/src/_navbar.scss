@@ -11,27 +11,27 @@
     position: relative;
     box-shadow: 0px -5px 80px #4f4f4f;
     border-bottom: 2px solid #4f4f4f;
+    margin-bottom: 10rem;
 }
 .navbar {
-    width: 100vw;
+    width: 100%;
     height: 100%;
     position: relative;
     background-color: black;
     opacity: 0.7;
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
         margin: 0;
         width: 99%;
         height: 80px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: black;
-        opacity: 0.7;
         position: absolute;
         top: 0;
         box-shadow: 0px 70px 30px #4f4f4f;
     }
     .logo {
+        display: inline-block;
         img {
             width: 7rem;
             cursor: pointer;
@@ -45,21 +45,24 @@
         }
     }
     &__menu {
+        width: 100%;
+        padding-right: 3rem;
+        margin-bottom: 0;
         display: flex;
         flex-direction: column;
+        align-items: center;
         list-style: none;
         width: 100%;
-        height: 5rem;
+        height: 1rem;
         position: absolute;
-        top: 10px;
-        // left: -100%;
-        // transition: all 0.5 ease;
-        margin-bottom: 2rem;
-        @include media-breakpoint-up(lg) {
-            width: 100%;
+        left: -100%;
+        transition: all 0.5 ease;
+        @include media-breakpoint-up(md) {
             margin: 0;
-            top: 0;
-            padding-right: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            top: 50;
+            left: 0;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -69,9 +72,15 @@
             text-align: center;
         }
         &-active {
+            width: 83%;
+            position: absolute;
+            top: 0;
+            left: 0%;
+            margin-bottom: 2rem;
+            padding: 0;
+            opacity: 1;
             background-color: black;
             opacity: 0.7;
-            left: 0;
             transition: all 0.5 ease;
             z-index: 1;
         }
@@ -113,7 +122,7 @@
         transform: translate(-100%, 60%);
         font-size: 1.8rem;
         cursor: pointer;
-        @include media-breakpoint-up(lg) {
+        @include media-breakpoint-up(md) {
             display: none;
         }
     }
