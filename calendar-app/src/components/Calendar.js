@@ -15,6 +15,7 @@ export default function Calendar({value, onChange}) {
   const endWeek = value.clone().endOf("month").endOf("week");
   const endMonth = value.clone().endOf("month");
   const startMonth = value.clone().startOf("month");
+  // console.log(moment(startMonth).format('DD-MM-YYYY'));
   
   useEffect(() => {
     const day = startWeek.clone().subtract(1, "day");
@@ -37,7 +38,6 @@ export default function Calendar({value, onChange}) {
       })
       .then((data) => {
         console.log(data);
-        // data.forEach(e => console.log(e.date));
         setReservations(data);
         }); 
     }, []);
@@ -56,17 +56,19 @@ export default function Calendar({value, onChange}) {
     const actualMonth = () => value.isSame(new Date(), "month");
     const prevToday = day => day.isBefore(new Date(), "day");
 
-    // const reservedDays = day => day.isSame(reservations.date, "day");
+    const reservedDays = reservations && reservations.map(res => moment(res.date).format('DD-MM-YYYY'));
+    console.log(reservedDays);
     
+    const reservation = day => reservedDays.forEach(e => day.isSame(e, "day"));
 
   
-  const dayStyling = (day, value, valueDate) => {
+  const dayStyling = (day, value) => {
     if (chosenDay(day, value)) return "pickedDay";
     if (yesterday(day)) return "yesterday";
     if (today(day)) return "today";
     if (daysOfNextMonth(day)) return "next-month";
     if (daysOfPreviousMonth(day)) return "previous-month";
-    // if (reservedDays()) return "reservedDay";
+    // if (reservation())return "reservedDay";
     return "";
   }
   
@@ -74,7 +76,7 @@ export default function Calendar({value, onChange}) {
     <>
     <div className="container">
     <div className="row justify-content-center">
-    <div className="calendar col-12">
+    <div className="calendar col col-lg-6">
     <div className="calendar__header">
       <div className="prevMonth" onClick={() => !actualMonth() && onChange(previousMonth())}>{!actualMonth() ? <i className="fas fa-chevron-left"></i> : null}</div>
       <div>{currentMonth()} {currentYear()}</div>
@@ -106,11 +108,12 @@ export default function Calendar({value, onChange}) {
     {showComponent && <CalendarForm valueDate={value}/>}
   </div>
   </div>
-  <div>
+  <div className="reserved">
+  <h3>Zarezerwowane terminy:</h3>
   {
     reservations && <ul>
       {
-        reservations.map(res => <li key={res.id}>{res.date}</li>)
+        reservations.map(res => <li key={res.id}>{moment(res.date).format('DD-MM-YYYY')}</li>)
       }
         </ul>
   }

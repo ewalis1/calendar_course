@@ -7,11 +7,10 @@ const CalendarForm = ({valueDate}) => {
     const [phone, setPhone] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [reserved, setReserved] = useState(false);
-    // const [reservations, setReservations] = useState(null);
 
     const handleSubmit = e => {
         e.preventDefault();
-        let date = JSON.stringify({valueDate});
+        let date = valueDate;
         const reservation = {name, surname, email, phone, date}
         setIsPending(true);
         
