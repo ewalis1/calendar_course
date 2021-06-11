@@ -110,7 +110,7 @@
   }
   .next-month {
       &::before {
-        content: none;
+        // content: none;
       }
     }
   @include media-breakpoint-up(lg) {

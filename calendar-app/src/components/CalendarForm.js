@@ -7,6 +7,7 @@ const CalendarForm = ({valueDate}) => {
     const [phone, setPhone] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [reserved, setReserved] = useState(false);
+    // const [reservations, setReservations] = useState(null);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -21,7 +22,6 @@ const CalendarForm = ({valueDate}) => {
         }).then(() => {
             console.log('New reservation added');
             setIsPending(false);
-            //wywolac f-cje, ktora pobierze rezerwacje
         })
     }
 

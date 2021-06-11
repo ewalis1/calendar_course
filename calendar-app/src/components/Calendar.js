@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import localization from 'moment/locale/pl';
 import CalendarForm from './CalendarForm';
-// import useFetch from 'use-http';
 
 export default function Calendar({value, onChange}) {
   const [calendar, setCalendar] = useState([]);
   const [active, setActive] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
-  moment.locale('pl', localization);
+  const [reservations, setReservations] = useState(null);
+
+  moment.updateLocale('pl', localization);
   
   const startWeek = value.clone().startOf("month").startOf("week");
   const endWeek = value.clone().endOf("month").endOf("week");
@@ -25,28 +26,7 @@ export default function Calendar({value, onChange}) {
       }
       setCalendar(arr);
     }, [value]);
-    
-    // const url = 'http://localhost:3001/reservations'
-    // const useFetch(reservations), {
-      //   useEffect(() => {
-        const [reservations, setReservations] = useState(null);
-        //     fetch(url)
-        //     .then(response => {
-          //       if (response.ok) {
-            //         return response.json()
-            //     }
-            //     throw new Error('Komunikacja z serwerem się nie powiodła!');
-            //     })
-            //     .then((data) => {
-              //       console.log(data);
-              //       data.forEach(e => console.log(e.date));
-              //       setReservations(data.results);
-              //       }); 
-              //   }, [url]);
-              //   return [reservations];
-              // }
-              
-              
+                        
     useEffect(() => {
       fetch('http://localhost:3001/reservations')
       .then(response => {
@@ -57,11 +37,10 @@ export default function Calendar({value, onChange}) {
       })
       .then((data) => {
         console.log(data);
-        data.forEach(e => console.log(e.date));
-        setReservations(data.results);
+        // data.forEach(e => console.log(e.date));
+        setReservations(data);
         }); 
     }, []);
-
 
     const chosenDay = (day, value) => value.isSame(day, "day");
     const yesterday = day => day.isBefore(new Date(), "day");
@@ -76,6 +55,9 @@ export default function Calendar({value, onChange}) {
   
     const actualMonth = () => value.isSame(new Date(), "month");
     const prevToday = day => day.isBefore(new Date(), "day");
+
+    // const reservedDays = day => day.isSame(reservations.date, "day");
+    
 
   
   const dayStyling = (day, value, valueDate) => {
