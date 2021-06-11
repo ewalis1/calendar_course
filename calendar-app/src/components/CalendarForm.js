@@ -6,7 +6,6 @@ const CalendarForm = ({valueDate}) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isPending, setIsPending] = useState(false);
-  const [reserved, setReserved] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,11 +63,7 @@ const CalendarForm = ({valueDate}) => {
           onChange={(e) => e.target.value}
         />
         <div className="div-btn">
-          {!isPending && (
-            <button className="form__button" onClick={() => setReserved(true)}>
-              Zarezerwuj
-            </button>
-          )}
+          {!isPending && <button className="form__button">Zarezerwuj</button>}
           {isPending && (
             <button disabled className="form__btn form__btn__disabled">
               Dodawanie rezerwacji...

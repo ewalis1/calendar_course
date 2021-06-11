@@ -66,6 +66,12 @@ export default function Calendar({value, onChange}) {
   const reservation = (day) =>
     reservedDays.forEach((e) => day.isSame(e, 'day'));
 
+  // console.log(reservation());
+  // console.log(moment(value).format('DD-MM-YYYY'));
+  // console.log(reservation);
+  // const reservation = day => day.isSame(reservedDays, "day");
+  // if (reservedDays.forEach((e, value) => e == value)) return "Zajęta data";
+
   const dayStyling = (day, value) => {
     if (chosenDay(day, value)) return 'pickedDay';
     if (yesterday(day)) return 'yesterday';
